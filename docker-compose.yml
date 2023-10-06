@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+      
+  backend:
+    image: ${DOCKER_REGISTRY-}todo
+    build:
+      context: .
+      dockerfile: ToDo/Dockerfile
+    ports:
+      - "5001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:443
+      - ConnectionStrings:DefaultConnection=Host=db;Port=5432;Username=postgres;Password=123456;Database=postgres;
+    depends_on:
+       - db
+    
