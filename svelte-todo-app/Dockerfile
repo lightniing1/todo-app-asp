@@ -6,11 +6,8 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY ./src ./src
-COPY ./public ./public
+COPY . .
 
-EXPOSE 6000
+EXPOSE 8000
 
-ENV HOST=0.0.0.0
-
-RUN npm run dev
+CMD ["npm", "run", "dev", "--", "--port", "8000"]

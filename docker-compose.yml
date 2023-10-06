@@ -32,6 +32,8 @@ services:
       context: svelte-todo-app
       dockerfile: Dockerfile
     ports:
-      - "6000"
+      - "8000:8000"
+    volumes:
+      - ./front-src:/usr/var/app/
     depends_on:
       - backend    
